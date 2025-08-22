@@ -79,6 +79,8 @@ extension LaunchAtLogin {
 	```
 	*/
 	public struct Toggle<Label: View>: View {
+		@State private var isHoveringToggle = false
+
 		@ObservedObject private var launchAtLogin = LaunchAtLogin.observable
 		private let label: Label
 
@@ -93,7 +95,26 @@ extension LaunchAtLogin {
 		}
 
 		public var body: some View {
-			SwiftUI.Toggle(isOn: $launchAtLogin.isEnabled) { label }
+			Button(action: {
+				launchAtLogin.isEnabled.toggle()
+			}) {
+				HStack {
+				label
+					.foregroundColor(.primary)
+				Spacer()
+				SwiftUI.Toggle("", isOn: $launchAtLogin.isEnabled)
+					.toggleStyle(.switch)
+				}
+				.padding(.vertical, 4)
+				.background(
+				isHoveringToggle ? Color.gray.opacity(0.3) : Color.clear
+				)
+				.cornerRadius(6)
+			}
+			.buttonStyle(PlainButtonStyle())
+			.onHover { hovering in
+				isHoveringToggle = hovering
+			}
 		}
 	}
 }
