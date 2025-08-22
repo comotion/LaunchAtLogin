@@ -106,6 +106,7 @@ extension LaunchAtLogin {
 					.toggleStyle(.switch)
 				}
 				.padding(.vertical, 4)
+				.padding(.leading, 12)
 				.background(
 				isHoveringToggle ? Color.gray.opacity(0.3) : Color.clear
 				)
